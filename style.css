@@ -13,10 +13,6 @@ header {
     margin-bottom: 50px;
 }
 
-.status {
-    color: #95dd8d;
-}
-
 footer {
     bottom: 0px;
     position: fixed;
@@ -52,13 +48,12 @@ input:focus {
     outline: none;
 }
 
-header p, header h1 {
+header, .status {
     color: #ff4c53;
 }
 
 .quiz p {
     font-size: 40px;
 }
-
 
 
