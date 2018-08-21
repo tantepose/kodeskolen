@@ -11,49 +11,47 @@ bør lære bort:
 */
 
 // globale variabler
-var range1 = 30;
-var range2 = 20;
 var points = 0;
-var question;
-var answer;
-var timer;
 var log = [];
+var addition;
 
 // nettsiden lastes
 window.onload = function () {
-    document.getElementById('gameover').style.display = 'none';
-    getQuestion();
     startTimer(30);
     document.getElementById('guess').focus();
+
+    addition = new Addition(10, 10);
+    document.getElementById('question').innerHTML = addition.question;
 }
 
 // form sendes inn når enter trykkes
 document.getElementById('question-form').onsubmit = function (event) {
     event.preventDefault();
-    let guess = document.getElementById('guess').value;
+    var guess = document.getElementById('guess').value;
 
     if (guess != '') {
-        if (guess == answer) {
-            log.push(question + answer + ' ✔️');
+        if (guess == addition.answer) {
+            log.push(addition.question + addition.answer + ' ✔️');
             adjustPoints(1);
         } else {
-            log.push(question + answer + ' ❌');
+            log.push(addition.question + addition.answer + ' ❌');
             adjustPoints(-1);
         }
-        document.getElementById('guess').value = '';
-        getQuestion();
+
+    addition = new Addition(20, 20);
+    document.getElementById('question').innerHTML = addition.question;
+
+    document.getElementById('guess').value = '';
     }
 }
 
-// lage nytt spørsmål
-function getQuestion () {
+// lage nytt spørsmålsobjekt
+function Addition (range1, range2) {
     var number1 = Math.floor(Math.random() * range1);
     var number2 = Math.floor(Math.random() * range2);
     
-    question = number1 + ' + ' + number2 + ' = ';
-    answer = number1 + number2;
-
-    document.getElementById('question').innerHTML = question;
+    this.question = number1 + ' + ' + number2 + ' = ';
+    this.answer = number1 + number2;
 }
 
 // gi eller ta poeng
@@ -64,10 +62,11 @@ function adjustPoints (value) {
 
 // starte timer
 function startTimer (seconds) {
-    timer = setInterval(function () {
+    var timer = setInterval(function () {
         seconds--;
         document.getElementById('time').innerHTML = seconds;
         if (seconds <= 0) {
+            clearInterval(timer);
             gameOver();
         }
     }, 1000);
@@ -75,8 +74,6 @@ function startTimer (seconds) {
 
 // spillet er over
 function gameOver () {
-    clearInterval(timer);
-
     document.getElementById('gameplay').style.display = 'none';
     document.getElementById('gameover').style.display = 'block';
     document.getElementById('gameover-points').innerHTML = 'Du fikk ' + points + ' poeng.';

@@ -59,3 +59,7 @@ header, footer {
 ul {
     list-style-type: none;
 }
+
+#gameover {
+    display: none;
+}
