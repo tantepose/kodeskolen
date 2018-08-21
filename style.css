@@ -30,7 +30,7 @@ p {
 }
 
 a {
-    color: white;
+    color: #ff4c53;
     text-decoration: none;
 }
 
@@ -48,7 +48,7 @@ input:focus {
     outline: none;
 }
 
-header, .status {
+header, footer {
     color: #ff4c53;
 }
 
@@ -56,4 +56,6 @@ header, .status {
     font-size: 40px;
 }
 
-
+ul {
+    list-style-type: none;
+}

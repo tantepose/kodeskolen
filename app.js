@@ -1,15 +1,29 @@
-// konfigurasjon
-const range1 = 30;
-const range2 = 20;
+/* 
+bør lære bort:
+* variabler
+* arrays
+* enkel matte
+* if-logikk
+* funksjoner
+* data inn
+* data ut
+* loops
+*/
 
-let points = 0;
-let answer;
-let timer;
+// globale variabler
+var range1 = 30;
+var range2 = 20;
+var points = 0;
+var question;
+var answer;
+var timer;
+var log = [];
 
 // nettsiden lastes
 window.onload = function () {
+    document.getElementById('gameover').style.display = 'none';
     getQuestion();
-    startTimer(60);
+    startTimer(30);
     document.getElementById('guess').focus();
 }
 
@@ -18,22 +32,25 @@ document.getElementById('question-form').onsubmit = function (event) {
     event.preventDefault();
     let guess = document.getElementById('guess').value;
 
-    if (guess == answer) {
-        adjustPoints(1);
-    } else {
-        adjustPoints(-1);
+    if (guess != '') {
+        if (guess == answer) {
+            log.push(question + answer + ' ✔️');
+            adjustPoints(1);
+        } else {
+            log.push(question + answer + ' ❌');
+            adjustPoints(-1);
+        }
+        document.getElementById('guess').value = '';
+        getQuestion();
     }
-    
-    getQuestion();
-    document.getElementById('guess').value = '';
 }
 
 // lage nytt spørsmål
 function getQuestion () {
-    let number1 = Math.floor(Math.random() * range1);
-    let number2 = Math.floor(Math.random() * range2);
+    var number1 = Math.floor(Math.random() * range1);
+    var number2 = Math.floor(Math.random() * range2);
     
-    let question = number1 + ' + ' + number2 + ' = ';
+    question = number1 + ' + ' + number2 + ' = ';
     answer = number1 + number2;
 
     document.getElementById('question').innerHTML = question;
@@ -46,21 +63,25 @@ function adjustPoints (value) {
 }
 
 // starte timer
-function startTimer (totalSeconds) {
-    let secondsLeft = totalSeconds;
-
+function startTimer (seconds) {
     timer = setInterval(function () {
-        secondsLeft--;
-        document.getElementById('time').innerHTML = secondsLeft;
-
-        if (secondsLeft <= 0) {
+        seconds--;
+        document.getElementById('time').innerHTML = seconds;
+        if (seconds <= 0) {
             gameOver();
         }
-
     }, 1000);
 }
 
 // spillet er over
 function gameOver () {
     clearInterval(timer);
+
+    document.getElementById('gameplay').style.display = 'none';
+    document.getElementById('gameover').style.display = 'block';
+    document.getElementById('gameover-points').innerHTML = 'Du fikk ' + points + ' poeng.';
+
+    log.forEach(function (item) {
+        document.getElementById('gameover-log').innerHTML += '<li>' + item + '</li>';
+    });
 }

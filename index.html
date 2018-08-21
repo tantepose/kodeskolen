@@ -14,14 +14,20 @@
             <p>Et spill om å plusse.</p>
         </header>
 
-        <div class = "quiz">
+        <div id = "gameplay">
             <form id="question-form">
-                <p id="question">34 + 12 = </p> <input type="text" id="guess">
+                <p id="question">X + X = </p> <input type="tel" id="guess">
             </form>
+            <p>🏆<span id="score">0</span> ⏰<span id="time">X</span></p>
+        </div>
+            
         </div>
 
-        <div class = "status">
-            <p>🏆<span id="score">0</span> ⏰<span id="time">0</span></p>
+        <div id = "gameover">
+            <h1>Tiden er ute!</h1>
+            <p id = "gameover-points">Du fikk X poeng.</p>
+            <p>Slik svarte du:</p>
+            <ul id="gameover-log"></ul>
         </div>
 
         <footer>
