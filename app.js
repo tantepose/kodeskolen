@@ -13,15 +13,15 @@ bør lære bort:
 // globale variabler
 var points = 0;
 var log = [];
-var addition;
+var calculation;
 
 // nettsiden lastes
 window.onload = function () {
     startTimer(30);
     document.getElementById('guess').focus();
 
-    addition = new Addition(10, 10);
-    document.getElementById('question').innerHTML = addition.question;
+    calculation = new Addition(10, 10);
+    document.getElementById('question').innerHTML = calculation.question;
 }
 
 // form sendes inn når enter trykkes
@@ -30,18 +30,17 @@ document.getElementById('question-form').onsubmit = function (event) {
     var guess = document.getElementById('guess').value;
 
     if (guess != '') {
-        if (guess == addition.answer) {
-            log.push(addition.question + addition.answer + ' ✔️');
+        if (guess == calculation.answer) {
+            log.push(calculation.question + calculation.answer + ' ✔️');
             adjustPoints(1);
         } else {
-            log.push(addition.question + addition.answer + ' ❌');
+            log.push(calculation.question + calculation.answer + ' ❌');
             adjustPoints(-1);
         }
 
-    addition = new Addition(20, 20);
-    document.getElementById('question').innerHTML = addition.question;
-
-    document.getElementById('guess').value = '';
+        calculation = new Addition(20, 20);
+        document.getElementById('question').innerHTML = calculation.question;
+        document.getElementById('guess').value = '';
     }
 }
 
@@ -57,7 +56,7 @@ function Addition (range1, range2) {
 // gi eller ta poeng
 function adjustPoints (value) {
     points = points + value;
-    document.getElementById('score').innerHTML = points + ' poeng';
+    document.getElementById('score').innerHTML = points;
 }
 
 // starte timer
@@ -76,7 +75,7 @@ function startTimer (seconds) {
 function gameOver () {
     document.getElementById('gameplay').style.display = 'none';
     document.getElementById('gameover').style.display = 'block';
-    document.getElementById('gameover-points').innerHTML = 'Du fikk ' + points + ' poeng.';
+    document.getElementById('gameover-points').innerHTML = 'Du fikk ' + points + " / " + log.length + ' poeng.';
 
     log.forEach(function (item) {
         document.getElementById('gameover-log').innerHTML += '<li>' + item + '</li>';
